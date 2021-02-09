@@ -30,7 +30,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-netlify-identity`,
       options: {
-        url: `https://your-identity-instance-here.netlify.com/` // required!
+        url: `https://admin-ngati-manu.netlify.app/` // required!
       }
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
