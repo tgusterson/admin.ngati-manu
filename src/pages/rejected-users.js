@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import Layout from "../components/layout"
-import PendingUserCard from "../components/PendingUserCard"
-import Container from 'react-bootstrap/Container'
+import RejectedUserCard from "../components/RejectedUserCard"
+import CardColumns from 'react-bootstrap/CardColumns';
 import Button from 'react-bootstrap/Button'
 import { getUsersByIndex } from "../utils/apiRequests"
 import 'bootstrap/dist/css/bootstrap.min.css'
-// FOR GETTING REJECTED USERS. WILL NEED TO BE ABLE TO RESTORE TO PENDING AND DELETE PERMANENTLY.
+
 const Page = () => {
   const [users, setUsers] = useState('')
   const [loading, setLoading] = useState(false)
@@ -20,26 +20,27 @@ const Page = () => {
   return (
     <div>
       <Layout>
-        <Container>
-          <h1>
-            Pending Users
-          </h1>
-          <Button
-            className="mb-4"
-            onClick={() => handleClick}>
-            Get Pending Users
+        <h1>Rejected Users</h1>
+        <p>Use this page to see all of the users in 'Rejected' status. You can send them back to the 'Pending' queue or delete them permanently to save database storage space here.</p>
+        <Button
+          variant={'warning'}
+          className="mb-4"
+          onClick={handleClick}>
+          Get Rejected Users
           </Button>
-          <div>
-            {loading && <p>Loading...</p>}
+        <div>
+          {loading && <p>Loading...</p>}
+          <CardColumns>
             {
               (users.length > 0 && !loading)
               &&
               users.map((user, index) =>
-                <PendingUserCard userObject={user.data} key={index} handleClick={handleClick} />
+                <RejectedUserCard userObject={user.data} id={user.id} key={index} handleClick={handleClick} />
               )
             }
-          </div>
-        </Container>
+          </CardColumns>
+          {(users.length === 0 && typeof users === 'object') && <p>No rejected users.</p>}
+        </div>
       </Layout>
     </div>
   )

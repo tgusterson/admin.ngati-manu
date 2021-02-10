@@ -33,3 +33,19 @@ export const updateUserApproval = async (approvalStatus, id) => {
     return e
   }
 }
+
+export const deleteUser = async (id) => {
+  try {
+    const data = await axios({
+      method: 'delete',
+      url: '/api/deleteUser',
+      data: {
+        id: id,
+        key: process.env.FAUNA_SERVER_SECRET
+      }
+    })
+    return data.data
+  } catch (e) {
+    return e
+  }
+}

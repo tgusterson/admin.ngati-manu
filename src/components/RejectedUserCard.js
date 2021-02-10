@@ -3,9 +3,9 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
-import { updateUserApproval } from "../utils/apiRequests"
+import { updateUserApproval, deleteUser } from "../utils/apiRequests"
 
-const PendingUserCard = ({ id, userObject, handleClick }) => {
+const RejectedUserCard = ({ id, userObject, handleClick }) => {
   const {
     FIRST_NAME,
     MIDDLE_NAME,
@@ -40,9 +40,19 @@ const PendingUserCard = ({ id, userObject, handleClick }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   const handleUserApproval = async (approval) => {
     try {
       await updateUserApproval(approval, id)
+      handleClick()
+      handleClose()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleUserDeletion = async (id) => {
+    try {
+      await deleteUser(id)
       handleClick()
       handleClose()
     } catch (error) {
@@ -98,11 +108,11 @@ const PendingUserCard = ({ id, userObject, handleClick }) => {
           {PATERNAL_GRANDFATHER_NAME && <p><b>Paternal Grandfather:</b> {PATERNAL_GRANDFATHER_NAME}</p>}
         </Modal.Body>
         <Modal.Footer>
-          <Button className="mx-3" variant="success" onClick={() => handleUserApproval("Approved")}>
-            Accept Application
+          <Button className="mx-3" variant="warning" onClick={() => handleUserApproval("Pending")}>
+            Send to Pending
           </Button>
-          <Button className="mx-3" variant="danger" onClick={() => handleUserApproval("Rejected")}>
-            Reject Application
+          <Button className="mx-3" variant="danger" onClick={() => handleUserDeletion(id)}>
+            Permanently Delete
           </Button>
           <Button className="mx-3" variant="secondary" onClick={handleClose}>
             Close
@@ -113,4 +123,4 @@ const PendingUserCard = ({ id, userObject, handleClick }) => {
   )
 }
 
-export default PendingUserCard
+export default RejectedUserCard

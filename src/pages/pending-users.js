@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Layout from "../components/layout"
 import PendingUserCard from "../components/PendingUserCard"
-import Container from 'react-bootstrap/Container'
+import CardColumns from 'react-bootstrap/CardColumns';
 import Button from 'react-bootstrap/Button'
 import { getUsersByIndex } from "../utils/apiRequests"
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -17,21 +17,25 @@ const Page = () => {
     setLoading(false)
   }
 
-
   return (
     <div>
       <Layout>
-        <Container>
-          <h1>
-            Pending Users
-          </h1>
-          <Button
-            className="mb-4"
-            onClick={handleClick}>
-            Get Pending Users
+        <h1>Pending Users</h1>
+        <p>Use this page to manage new applicants.</p>
+        <ol>
+          <li>Start by clicking the 'Get Pending Users' button.</li>
+          <li>From there, all of the 'Pending' applications will appear.</li>
+          <li>Selecting 'View Application' on an application card will display the full application details.</li>
+          <li>Within the application details screen, choose to either 'Approve' or 'Reject' the application (or hit 'Close' if you want to decide later).</li>
+        </ol>
+        <Button
+          className="mb-4"
+          onClick={handleClick}>
+          Get Pending Users
           </Button>
-          <div>
-            {loading && <p>Loading...</p>}
+        <div>
+          {loading && <p>Loading...</p>}
+          <CardColumns>
             {
               (users.length > 0 && !loading)
               &&
@@ -39,47 +43,12 @@ const Page = () => {
                 <PendingUserCard userObject={user.data} id={user.id} key={index} handleClick={handleClick} />
               )
             }
-          </div>
-        </Container>
+          </CardColumns>
+          {(users.length === 0 && typeof users === 'object') && <p>No pending users.</p>}
+        </div>
       </Layout>
     </div>
   )
 }
 
 export default Page
-
-// "data": {
-//   "APPROVED": "Pending",
-//   "FIRST_NAME": "Test",
-//   "MIDDLE_NAME": "",
-//   "LAST_NAME": "Testlast",
-//   "EMAIL": "test@test.test",
-//   "GENDER": "Other",
-//   "DOB": "1991-02-08",
-//   "STREET_ADDRESS": "Test",
-//   "SUBURB": "Test",
-//   "TOWN": "Test",
-//   "COUNTRY": "Aotearoa / New Zealand",
-//   "LANDLINE": "124345",
-//   "HAS_TAMIRIKI": "No",
-//   "NUMBER_OF_TAMIRIKI": "",
-//   "HAS_SIBLINGS": "No",
-//   "NUMBER_OF_SIBLINGS": "",
-//   "TUPUNA": [
-//       "Ihipera Tiaho"
-//   ],
-//   "IS_WHANGAI": "No",
-//   "MOTHER_NAME": "",
-//   "MOTHER_WHAKAPAPA": "",
-//   "FATHER_NAME": "",
-//   "MATERNAL_GRANDMOTHER_NAME": "",
-//   "PATERNAL_GRANDMOTHER_NAME": "",
-//   "MATERNAL_GRANDFATHER_NAME": "",
-//   "PATERNAL_GRANDFATHER_NAME": "",
-//   "DECLARATION_STATEMENTS": [
-//       "The information I have given is true and complete to the best of my knowledge",
-//       "I have read and understood the declaration indicated above",
-//       "I also undertake to update my relevant information as and when my circumstances change"
-//   ],
-//   "DATE_OF_FORM_SUBMISSION": "2021-02-08T01:12:59.054Z"
-// }
