@@ -4,8 +4,8 @@ const faunadb = require('faunadb'),
 const client = require("./utils/faunaClient");
 
 exports.handler = async event => {
-  if (event.httpMethod === 'POST') {
-    const eventBody = JSON.parse(event.body);
+  const eventBody = JSON.parse(event.body);
+  if (event.httpMethod === 'POST' && eventBody.key === process.env.FAUNA_SERVER_SECRET) {
     try {
       const data = await client.query(
         q.Map(

@@ -1,13 +1,14 @@
 import axios from 'axios'
 
-export const getPendingUsers = async () => {
+export const getUsersByIndex = async (query) => {
   try {
     const data = await axios({
       method: 'post',
       url: '/api/getUsersByIndex',
       data: {
         index: "getPendingUsers",
-        query: "Pending"
+        query: query,
+        key: process.env.FAUNA_SERVER_SECRET
       }
     })
     return data.data
@@ -16,14 +17,15 @@ export const getPendingUsers = async () => {
   }
 }
 
-export const getApprovedUsers = async () => {
+export const updateUserApproval = async (approvalStatus, id) => {
   try {
     const data = await axios({
-      method: 'post',
-      url: '/api/getAllUsers',
+      method: 'patch',
+      url: '/api/updateApproval',
       data: {
-        index: "getPendingUsers",
-        query: true
+        approved: approvalStatus,
+        id: id,
+        key: process.env.FAUNA_SERVER_SECRET
       }
     })
     return data.data

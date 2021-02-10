@@ -33,6 +33,12 @@ module.exports = {
         url: `https://admin-ngati-manu.netlify.app/` // required!
       }
     },
+    {
+      resolve: `gatsby-plugin-env-variables`,
+      options: {
+        allowList: ["FAUNA_SERVER_SECRET"]
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

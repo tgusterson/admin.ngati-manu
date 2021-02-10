@@ -4,8 +4,8 @@ const faunadb = require('faunadb'),
 const client = require("./utils/faunaClient");
 
 exports.handler = async event => {
-  if (event.httpMethod === 'PATCH') {
-    const eventBody = JSON.parse(event.body);
+  const eventBody = JSON.parse(event.body);
+  if (event.httpMethod === 'PATCH' && eventBody.key === process.env.FAUNA_SERVER_SECRET) {
     try {
       const data = await client.query(
         q.Update(
