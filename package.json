@@ -8,6 +8,9 @@
     "@reach/dialog": "^0.13.0",
     "@reach/tabs": "^0.13.0",
     "@reach/visually-hidden": "^0.13.0",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "faunadb": "^4.0.3",
     "gatsby": "^2.32.3",
     "gatsby-image": "^2.11.0",
     "gatsby-plugin-manifest": "^2.12.0",
@@ -19,6 +22,7 @@
     "gatsby-transformer-sharp": "^2.12.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.4.3",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
     "react-netlify-identity-widget": "^0.2.7"
