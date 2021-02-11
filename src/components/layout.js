@@ -1,25 +1,29 @@
-import React from "react"
-import IdentityModal, { useIdentityContext } from "react-netlify-identity-widget"
-import Container from 'react-bootstrap/Container';
+import React, { useState, useEffect } from "react"
+import Container from 'react-bootstrap/Container'
 import Header from "./header"
-import "react-netlify-identity-widget/styles.css"
+import netlifyIdentity from "netlify-identity-widget"
 
 const Layout = ({ children }) => {
-  const identity = useIdentityContext()
-  const [dialog, setDialog] = React.useState(false)
+  const [user, setUser] = useState(netlifyIdentity ? netlifyIdentity.currentUser : undefined)
 
-  const isLoggedIn = identity && identity.isLoggedIn
+  useEffect(() => {
+    netlifyIdentity.init({})
+  }, [])
+
+  netlifyIdentity.on("login", user => {
+    netlifyIdentity.close()
+    setUser(user)
+  })
+  netlifyIdentity.on("logout", () => {
+    netlifyIdentity.close()
+    setUser()
+  })
+
   return (
-    <>
-      <IdentityModal
-        showDialog={dialog}
-        onCloseDialog={() => setDialog(false)}
-      />
-      <Container>
-        <Header setDialog={setDialog} isLoggedIn={isLoggedIn} />
-        {isLoggedIn ? <main>{children}</main> : <div>You must log in to access this site</div>}
-      </Container>
-    </>
+    <Container>
+      <Header user={user} netlifyIdentity={netlifyIdentity} />
+      {user ? <main>{children}</main> : <div>You must log in to access this site</div>}
+    </Container>
   )
 }
 

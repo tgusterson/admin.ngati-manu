@@ -28,12 +28,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-netlify-identity`,
-      options: {
-        url: `https://admin-ngati-manu.netlify.app/` // required!
-      }
-    },
-    {
       resolve: `gatsby-plugin-env-variables`,
       options: {
         allowList: ["FAUNA_SERVER_SECRET"]
