@@ -20,8 +20,14 @@ const Page = () => {
   return (
     <div>
       <Layout>
-        <h1>Rejected Users</h1>
+        <h1>Rejected Applications</h1>
         <p>Use this page to see all of the users in 'Rejected' status. You can send them back to the 'Pending' queue or delete them permanently to save database storage space here.</p>
+        <ol>
+          <li>Start by clicking the 'Get Rejected Users' button.</li>
+          <li>From there, all of the 'Rejected' applications will appear.</li>
+          <li>Selecting 'View Application' on an application card will display the full application details.</li>
+          <li>Within the application details screen, choose to either 'Send to Pending' (i.e. flag the application to return to the 'Pending Applications' queue) or 'Permanently Delete' the application (to save database storage).</li>
+        </ol>
         <Button
           variant={'warning'}
           className="mb-4"

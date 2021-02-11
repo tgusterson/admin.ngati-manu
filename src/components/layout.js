@@ -20,10 +20,12 @@ const Layout = ({ children }) => {
   })
 
   return (
-    <Container>
+    <>
       <Header user={user} netlifyIdentity={netlifyIdentity} />
-      {user ? <main>{children}</main> : <div>You must log in to access this site</div>}
-    </Container>
+      <Container>
+        {user ? <main>{children}</main> : <div>You must log in to access this site</div>}
+      </Container>
+    </>
   )
 }
 

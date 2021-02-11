@@ -20,8 +20,8 @@ const Page = () => {
   return (
     <div>
       <Layout>
-        <h1>Pending Users</h1>
-        <p>Use this page to manage new applicants.</p>
+        <h1>Pending Applications</h1>
+        <p>Use this page to review pending applications from the Ngati Manu website.</p>
         <ol>
           <li>Start by clicking the 'Get Pending Users' button.</li>
           <li>From there, all of the 'Pending' applications will appear.</li>

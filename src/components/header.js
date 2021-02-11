@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from 'gatsby'
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 
 const Header = ({ user, netlifyIdentity }) => {
@@ -12,12 +13,16 @@ const Header = ({ user, netlifyIdentity }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as="li"><Link to="/pending-users/" className="nav-link">Review Pending Users</Link></Nav.Link>
-            <Nav.Link as="li"><Link to="/rejected-users/" className="nav-link">Manage Rejected Users</Link></Nav.Link>
+            <NavDropdown title="User Management" id="basic-nav-dropdown" as="li">
+              <NavDropdown.Item as="li"><Link to="/pending-users/" className="nav-link">Review Applications</Link></NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item as="li"><Link to="/rejected-users/" className="nav-link">Manage Rejected Applications</Link></NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        <Button onClick={() => netlifyIdentity.open()}>{user ? "Logout" : "Login"}</Button>
+        <Button className="my-3" onClick={() => netlifyIdentity.open()}>{user ? "Log Out" : "Log In"}</Button>
       </Navbar>
+      <div style={{ marginBottom: '2rem' }} />
     </>
   )
 }
