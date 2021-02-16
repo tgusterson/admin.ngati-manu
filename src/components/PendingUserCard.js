@@ -24,6 +24,7 @@ const PendingUserCard = ({ id, userObject, handleClick }) => {
     HAS_SIBLINGS,
     NUMBER_OF_SIBLINGS,
     TUPUNA,
+    TUPUNA_UNSURE_EXPLANATION,
     IS_WHANGAI,
     MOTHER_NAME,
     MOTHER_WHAKAPAPA,
