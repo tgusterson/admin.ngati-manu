@@ -97,6 +97,7 @@ const RejectedUserCard = ({ id, userObject, handleClick }) => {
           <p><b>Has Siblings:</b> {HAS_SIBLINGS}</p>
           {NUMBER_OF_SIBLINGS && <p><b># of Siblings:</b> {NUMBER_OF_SIBLINGS}</p>}
           <p><b>Tupuna:</b> {TUPUNA.map((tupuna, index) => <li key={index}>{tupuna}</li>)}</p>
+          {TUPUNA_UNSURE_EXPLANATION && <p><b>Tupuna Free Text:</b> {TUPUNA_UNSURE_EXPLANATION}</p>}
           <p><b>Is Whangai Adopted:</b> {IS_WHANGAI}</p>
           {MOTHER_NAME && <p><b>Mother's Name:</b> {MOTHER_NAME}</p>}
           {MOTHER_WHAKAPAPA && <p><b>Mother's Tupuna:</b> {MOTHER_WHAKAPAPA}</p>}
