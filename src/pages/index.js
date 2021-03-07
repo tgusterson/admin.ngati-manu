@@ -21,6 +21,7 @@ const IndexPage = () => {
         <br /><br />
         <h3>🎉 Live Features:</h3>
         <ul>
+          <li>Approved user CSV download</li>
           <li>Application review tool (review, approve or decline new applications from the Ngati Manu site)</li>
           <li>Rejected applications management tool (delete rejected applicants from the database or flag them as 'Pending' if you changed your mind)</li>
         </ul>
@@ -29,7 +30,6 @@ const IndexPage = () => {
         <ul>
           <li>Automatic emails to approved / rejected applicants</li>
           <li>Approved user search</li>
-          <li>Approved user CSV download</li>
           <li>Update user information</li>
         </ul>
       </Layout>
