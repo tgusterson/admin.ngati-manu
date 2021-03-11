@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
-import { updateUserApproval } from "../utils/apiRequests"
+import { updateUserApproval, sendMail } from "../utils/apiRequests"
 
 const PendingUserCard = ({ id, userObject, handleClick }) => {
   const {
@@ -36,18 +36,63 @@ const PendingUserCard = ({ id, userObject, handleClick }) => {
     PATERNAL_GRANDFATHER_NAME,
     DATE_OF_FORM_SUBMISSION
   } = userObject
-
+  const approvedHTMLTemplate = `
+  <p>Dear ${FIRST_NAME},</p>
+  <p>Tēnā koe – thank you for registering with Ngāti Manu.  We wish to confirm your registration has been approved.</p>
+  <p>Ngā mihi<br />
+  Tāhuhu Nui O Ngāti Manu</p>
+  <img src="https://images.ctfassets.net/dygjh8nz9g3f/1FNUMWMpktcpOcvhORSdZS/bbecf02281eb4e17013ef010886e062d/logo.jpg?h=250" />
+  `
+  const declinedHTMLTemplate = `
+  <p>Dear ${FIRST_NAME},</p>
+  <p>Tēnā koe – thank you for completing our registration form.  Your registration has not been approved as it does not show your whakapapa to Ngāti Manu.  If you have more information or need assistance please contact us at <a href="mailto:tahuhu@ngatimanu.com">tahuhu@ngatimanu.com</a>.</p>
+  <p>Ngā mihi<br />
+  Tāhuhu Nui O Ngāti Manu</p>
+  <img src="https://images.ctfassets.net/dygjh8nz9g3f/1FNUMWMpktcpOcvhORSdZS/bbecf02281eb4e17013ef010886e062d/logo.jpg?h=250" />
+  `
+  const approvedTextTemplate = `
+  Dear ${FIRST_NAME}, 
+  Tēnā koe – thank you for registering with Ngāti Manu. 
+  We wish to confirm your registration has been approved. 
+  Ngā mihi, 
+  Tāhuhu Nui O Ngāti Manu
+  `
+  const declinedTextTemplate = `
+  Dear ${FIRST_NAME},
+  Tēnā koe – thank you for completing our registration form.  Your registration has not been approved as it does not show your whakapapa to Ngāti Manu.  If you have more information or need assistance please contact us at tahuhu@ngatimanu.com.
+  Ngā mihi,
+  Tāhuhu Nui O Ngāti Manu
+  `
   const [show, setShow] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleUserApproval = async (approval) => {
     try {
-      await updateUserApproval(approval, id)
+      setSubmitting(true)
+      const updateUser = await updateUserApproval(approval, id)
+      if (updateUser === 200) {
+        const email = await sendMail({
+          to: 'thomgusterson@gmail.com',
+          subject: 'Your Ngāti Manu Registration',
+          html: approval === "Approved" ? approvedHTMLTemplate : declinedHTMLTemplate,
+          text: approval === "Approved" ? approvedTextTemplate : declinedTextTemplate,
+        })
+        if (email === 200) {
+          alert('Registration email sent successfully')
+        } else {
+          alert('**Email notification failed, please contact applicant manually**')
+        }
+      } else {
+        alert('Something went wrong, please try again')
+      }
       handleClick()
       handleClose()
+      setSubmitting(false)
     } catch (error) {
-      console.log(error)
+      setSubmitting(false)
+      alert('Something went wrong, please try again')
     }
   }
 
@@ -100,15 +145,24 @@ const PendingUserCard = ({ id, userObject, handleClick }) => {
           {PATERNAL_GRANDFATHER_NAME && <p><b>Paternal Grandfather:</b> {PATERNAL_GRANDFATHER_NAME}</p>}
         </Modal.Body>
         <Modal.Footer>
-          <Button className="mx-3" variant="success" onClick={() => handleUserApproval("Approved")}>
-            Accept Application
+          {submitting &&
+            <Button className="mx-3" variant="warning" disabled>Submitting, please wait...</Button>
+          }
+          {!submitting &&
+            <Button className="mx-3" variant="success" onClick={() => handleUserApproval("Approved")}>
+              Accept Application
           </Button>
-          <Button className="mx-3" variant="danger" onClick={() => handleUserApproval("Rejected")}>
-            Reject Application
+          }
+          {!submitting &&
+            <Button className="mx-3" variant="danger" onClick={() => handleUserApproval("Rejected")}>
+              Reject Application
           </Button>
-          <Button className="mx-3" variant="secondary" onClick={handleClose}>
-            Close
+          }
+          {!submitting &&
+            <Button className="mx-3" variant="secondary" onClick={handleClose}>
+              Close
           </Button>
+          }
         </Modal.Footer>
       </Modal>
     </>

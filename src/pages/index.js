@@ -1,5 +1,7 @@
 import React from "react"
 import Layout from "../components/layout"
+import Button from 'react-bootstrap/Button'
+import { sendMail } from "../utils/apiRequests"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function getCurrentDate(separator = '') {
@@ -21,6 +23,7 @@ const IndexPage = () => {
         <br /><br />
         <h3>🎉 Live Features:</h3>
         <ul>
+          <li>Automatic emails to approved / rejected applicants</li>
           <li>Approved user CSV download</li>
           <li>Application review tool (review, approve or decline new applications from the Ngati Manu site)</li>
           <li>Rejected applications management tool (delete rejected applicants from the database or flag them as 'Pending' if you changed your mind)</li>
@@ -28,10 +31,10 @@ const IndexPage = () => {
         <br />
         <h3>📅 Upcoming Features:</h3>
         <ul>
-          <li>Automatic emails to approved / rejected applicants</li>
           <li>Approved user search</li>
           <li>Update user information</li>
         </ul>
+        <Button onClick={() => sendMail()}>Send email test</Button>
       </Layout>
     </div>
   )

@@ -28,7 +28,7 @@ export const updateUserApproval = async (approvalStatus, id) => {
         key: process.env.FAUNA_SERVER_SECRET
       }
     })
-    return data.data
+    return data.status
   } catch (e) {
     return e
   }
@@ -45,6 +45,25 @@ export const deleteUser = async (id) => {
       }
     })
     return data.data
+  } catch (e) {
+    return e
+  }
+}
+
+export const sendMail = async ({ to, subject, html, text }) => {
+  try {
+    const data = await axios({
+      method: 'post',
+      url: '/api/sendEmail',
+      data: {
+        to,
+        subject,
+        html,
+        text,
+        key: process.env.FAUNA_SERVER_SECRET
+      }
+    })
+    return data.status
   } catch (e) {
     return e
   }
