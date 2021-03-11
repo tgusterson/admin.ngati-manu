@@ -74,7 +74,7 @@ const PendingUserCard = ({ id, userObject, handleClick }) => {
       const updateUser = await updateUserApproval(approval, id)
       if (updateUser === 200) {
         const email = await sendMail({
-          to: 'thomgusterson@gmail.com',
+          to: EMAIL,
           subject: 'Your Ngāti Manu Registration',
           html: approval === "Approved" ? approvedHTMLTemplate : declinedHTMLTemplate,
           text: approval === "Approved" ? approvedTextTemplate : declinedTextTemplate,

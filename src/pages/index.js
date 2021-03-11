@@ -1,7 +1,5 @@
 import React from "react"
 import Layout from "../components/layout"
-import Button from 'react-bootstrap/Button'
-import { sendMail } from "../utils/apiRequests"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function getCurrentDate(separator = '') {
@@ -34,7 +32,6 @@ const IndexPage = () => {
           <li>Approved user search</li>
           <li>Update user information</li>
         </ul>
-        <Button onClick={() => sendMail()}>Send email test</Button>
       </Layout>
     </div>
   )
