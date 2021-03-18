@@ -10,7 +10,8 @@ exports.handler = async event => {
       const data = await client.query(
         q.Map(
           q.Paginate(
-            q.Match(q.Index(eventBody.index), eventBody.query)
+            q.Match(q.Index(eventBody.index), eventBody.query),
+            { size: 100000 }
           ),
           q.Lambda("USER", q.Get(q.Var("USER")))
         )
@@ -21,6 +22,7 @@ exports.handler = async event => {
           data: responseObj.data
         }
       });
+      console.log(responseObjArr)
       return {
         statusCode: 200,
         body: JSON.stringify(responseObjArr)
