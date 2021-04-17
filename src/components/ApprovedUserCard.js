@@ -45,8 +45,8 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
   const handleUserApproval = async (approval) => {
     try {
       setSubmitting(true)
-      const updateUserApproval = await updateUserApproval(approval, id)
-      if (updateUserApproval === 200) {
+      const updatedUser = await updateUserApproval(approval, id)
+      if (updatedUser === 200) {
         alert('Archival successful')
       } else {
         alert('Something went wrong, please try again')
@@ -62,8 +62,8 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
   const handleUserUpdate = async (user) => {
     try {
       setSubmitting(true)
-      const updateUser = await updateUser(user, id)
-      if (updateUser === 200) {
+      const updatedUserContent = await updateUser(user, id)
+      if (updatedUserContent === 200) {
         alert('Update successful')
       } else {
         alert('Something went wrong, please try again')
