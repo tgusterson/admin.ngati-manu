@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { CSVLink } from "react-csv"
 import Layout from "../components/layout"
 import PendingUserCard from "../components/PendingUserCard"
 import CardColumns from 'react-bootstrap/CardColumns';
@@ -7,10 +8,11 @@ import { getUsersByIndex } from "../utils/apiRequests"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Page = () => {
-  const [users, setUsers] = useState('')
+  const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
 
   const handleClick = async () => {
+    setUsers([])
     setLoading(true)
     const pendingUsers = await getUsersByIndex("Pending")
     setUsers(pendingUsers)
@@ -35,6 +37,15 @@ const Page = () => {
           </Button>
         <div>
           {loading && <p>Loading...</p>}
+          {users.length !== 0 &&
+            <CSVLink
+              className="btn btn-primary mt-3 mb-3"
+              filename={"pending_users.csv"}
+              data={users.map((user) => {
+                return { id: JSON.stringify(user.id), ...user.data }
+              })}>
+              Download File (.csv)
+            </CSVLink>}
           <CardColumns>
             {
               (users.length > 0 && !loading)
@@ -44,7 +55,7 @@ const Page = () => {
               )
             }
           </CardColumns>
-          {(users.length === 0 && typeof users === 'object') && <p>No pending users.</p>}
+          {(users.length === 0 && typeof users === 'object' && !loading) && <p>No pending users.</p>}
         </div>
       </Layout>
     </div>

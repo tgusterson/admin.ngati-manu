@@ -19,6 +19,8 @@ const Header = ({ user, netlifyIdentity }) => {
               <NavDropdown.Item as="li"><Link to="/rejected-users/" className="nav-link">Manage Rejected Applications</Link></NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as="li"><Link to="/approved-users/" className="nav-link">Approved User Database</Link></NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item as="li"><Link to="/archived-users/" className="nav-link">Archived Users</Link></NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

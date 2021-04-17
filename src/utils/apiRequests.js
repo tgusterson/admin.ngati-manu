@@ -34,6 +34,23 @@ export const updateUserApproval = async (approvalStatus, id) => {
   }
 }
 
+export const updateUser = async (userObject, id) => {
+  try {
+    const data = await axios({
+      method: 'patch',
+      url: '/api/updateUser',
+      data: {
+        user: { ...userObject },
+        id: id,
+        key: process.env.FAUNA_SERVER_SECRET
+      }
+    })
+    return data.status
+  } catch (e) {
+    return e
+  }
+}
+
 export const deleteUser = async (id) => {
   try {
     const data = await axios({

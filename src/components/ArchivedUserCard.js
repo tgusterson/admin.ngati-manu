@@ -3,9 +3,9 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
-import { updateUserApproval, updateUser } from "../utils/apiRequests"
+import { updateUserApproval, deleteUser } from "../utils/apiRequests"
 
-const ApprovedUserCard = ({ id, userObject, handleClick }) => {
+const ArchivedUserCard = ({ id, userObject, handleClick }) => {
   const {
     FIRST_NAME,
     MIDDLE_NAME,
@@ -36,7 +36,7 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
     PATERNAL_GRANDFATHER_NAME,
     DATE_OF_FORM_SUBMISSION
   } = userObject
-  const [editedUser, setEditedUser] = useState(userObject);
+
   const [show, setShow] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const handleClose = () => setShow(false);
@@ -45,26 +45,9 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
   const handleUserApproval = async (approval) => {
     try {
       setSubmitting(true)
-      const updateUserApproval = await updateUserApproval(approval, id)
-      if (updateUserApproval === 200) {
-        alert('Archival successful')
-      } else {
-        alert('Something went wrong, please try again')
-      }
-      handleClick()
-      handleClose()
-      setSubmitting(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleUserUpdate = async (user) => {
-    try {
-      setSubmitting(true)
-      const updateUser = await updateUser(user, id)
+      const updateUser = await updateUserApproval(approval, id)
       if (updateUser === 200) {
-        alert('Update successful')
+        alert('User restored')
       } else {
         alert('Something went wrong, please try again')
       }
@@ -76,11 +59,14 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
     }
   }
 
-  const handleChange = (e, field) => {
-    const updatedUser = { ...editedUser }
-    updatedUser[field] = e.target.value
-    setEditedUser({ ...updatedUser })
-    console.log(updatedUser)
+  const handleUserDeletion = async (id) => {
+    try {
+      await deleteUser(id)
+      handleClick()
+      handleClose()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -101,30 +87,12 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
           <Modal.Title>{FIRST_NAME} {LAST_NAME}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div>
-            <label style={{ marginRight: '5px' }}><b>First Name:</b></label>
-            <input type="text" value={editedUser.FIRST_NAME} onChange={(e) => handleChange(e, "FIRST_NAME")} />
-          </div>
-
-          {MIDDLE_NAME &&
-            <div>
-              <label style={{ marginRight: '5px' }}><b>Middle Name:</b></label>
-              <input type="text" value={editedUser.MIDDLE_NAME} onChange={(e) => handleChange(e, "MIDDLE_NAME")} />
-            </div>}
-
-          <div>
-            <label style={{ marginRight: '5px' }}><b>Last Name:</b></label>
-            <input type="text" value={editedUser.LAST_NAME} onChange={(e) => handleChange(e, "LAST_NAME")} />
-          </div>
-
+          <p><b>First Name:</b> {FIRST_NAME}</p>
+          {MIDDLE_NAME && <p><b>Middle Name:</b> {MIDDLE_NAME}</p>}
+          <p><b>Last Name:</b> {LAST_NAME}</p>
           <p><b>Database ID:</b> {id}</p>
           {DATE_OF_FORM_SUBMISSION && <p><b>Form Submission Date (yyyy-mm-dd):</b> {DATE_OF_FORM_SUBMISSION.substring(0, 10)}</p>}
-
-          <div>
-            <label style={{ marginRight: '5px' }}><b>Email:</b></label>
-            <input type="text" value={editedUser.EMAIL} onChange={(e) => handleChange(e, "EMAIL")} />
-          </div>
-
+          <p><b>Email:</b> {EMAIL}</p>
           <p><b>Gender:</b> {GENDER}</p>
           <p><b>Date of Birth (yyyy-mm-dd):</b> {DOB}</p>
           <p><b>St Address:</b> {STREET_ADDRESS}</p>
@@ -154,13 +122,13 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
             <Button className="mx-3" variant="warning" disabled>Submitting, please wait...</Button>
           }
           {!submitting &&
-            <Button className="mx-3" variant="success" onClick={() => handleUserUpdate(editedUser)}>
-              Save Changes
+            <Button className="mx-3" variant="success" onClick={() => handleUserApproval("Approved")}>
+              Restore User
           </Button>
           }
           {!submitting &&
-            <Button className="mx-3" variant="warning" onClick={() => handleUserApproval("Archived")}>
-              Archive User
+            <Button className="mx-3" variant="danger" onClick={() => handleUserDeletion(id)}>
+              Permanently Delete
           </Button>
           }
           {!submitting &&
@@ -174,4 +142,4 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
   )
 }
 
-export default ApprovedUserCard
+export default ArchivedUserCard
