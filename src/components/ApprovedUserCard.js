@@ -65,7 +65,9 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
       const updatedUserContent = await updateUser(user, id)
       if (updatedUserContent === 200) {
         alert('Update successful')
+        console.log(updatedUserContent)
       } else {
+        console.log(updatedUserContent)
         alert('Something went wrong, please try again')
       }
       handleClick()
@@ -80,7 +82,6 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
     const updatedUser = { ...editedUser }
     updatedUser[field] = e.target.value
     setEditedUser({ ...updatedUser })
-    console.log(updatedUser)
   }
 
   return (
@@ -103,51 +104,107 @@ const ApprovedUserCard = ({ id, userObject, handleClick }) => {
         <Modal.Body>
           <div>
             <label style={{ marginRight: '5px' }}><b>First Name:</b></label>
-            <input type="text" value={editedUser.FIRST_NAME} onChange={(e) => handleChange(e, "FIRST_NAME")} />
+            <input style={{ width: '75%' }} type="text" value={editedUser.FIRST_NAME || ''} onChange={(e) => handleChange(e, "FIRST_NAME")} />
           </div>
-
-          {MIDDLE_NAME &&
-            <div>
-              <label style={{ marginRight: '5px' }}><b>Middle Name:</b></label>
-              <input type="text" value={editedUser.MIDDLE_NAME} onChange={(e) => handleChange(e, "MIDDLE_NAME")} />
-            </div>}
-
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Middle Name:</b></label>
+            <input type="text" style={{ width: '75%' }} value={editedUser.MIDDLE_NAME || ''} onChange={(e) => handleChange(e, "MIDDLE_NAME")} />
+          </div>
           <div>
             <label style={{ marginRight: '5px' }}><b>Last Name:</b></label>
-            <input type="text" value={editedUser.LAST_NAME} onChange={(e) => handleChange(e, "LAST_NAME")} />
+            <input style={{ width: '75%' }} type="text" value={editedUser.LAST_NAME || ''} onChange={(e) => handleChange(e, "LAST_NAME")} />
           </div>
-
           <p><b>Database ID:</b> {id}</p>
           {DATE_OF_FORM_SUBMISSION && <p><b>Form Submission Date (yyyy-mm-dd):</b> {DATE_OF_FORM_SUBMISSION.substring(0, 10)}</p>}
-
           <div>
             <label style={{ marginRight: '5px' }}><b>Email:</b></label>
-            <input type="text" value={editedUser.EMAIL} onChange={(e) => handleChange(e, "EMAIL")} />
+            <input style={{ width: '75%' }} type="text" value={editedUser.EMAIL || ''} onChange={(e) => handleChange(e, "EMAIL")} />
           </div>
-
-          <p><b>Gender:</b> {GENDER}</p>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Gender:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.GENDER || ''} onChange={(e) => handleChange(e, "GENDER")} />
+          </div>
           <p><b>Date of Birth (yyyy-mm-dd):</b> {DOB}</p>
-          <p><b>St Address:</b> {STREET_ADDRESS}</p>
-          <p><b>Town:</b> {TOWN}</p>
-          <p><b>Suburb:</b> {SUBURB}</p>
-          <p><b>Country:</b> {COUNTRY}</p>
-          <p><b>Phone #:</b> {LANDLINE}</p>
-          {MOBILE && <p><b>Mobile #:</b> {MOBILE}</p>}
-          <p><b>Has Children:</b> {HAS_TAMIRIKI}</p>
-          {NUMBER_OF_TAMIRIKI && <p><b># of Children:</b> {NUMBER_OF_TAMIRIKI}</p>}
-          <p><b>Has Siblings:</b> {HAS_SIBLINGS}</p>
-          {NUMBER_OF_SIBLINGS && <p><b># of Siblings:</b> {NUMBER_OF_SIBLINGS}</p>}
+          <div>
+            <label style={{ marginRight: '5px' }}><b>St Address:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.STREET_ADDRESS || ''} onChange={(e) => handleChange(e, "STREET_ADDRESS")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Town:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.TOWN || ''} onChange={(e) => handleChange(e, "TOWN")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Suburb:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.SUBURB || ''} onChange={(e) => handleChange(e, "SUBURB")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Country:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.COUNTRY || ''} onChange={(e) => handleChange(e, "COUNTRY")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Phone #:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.LANDLINE || ''} onChange={(e) => handleChange(e, "LANDLINE")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Mobile #:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.MOBILE || ''} onChange={(e) => handleChange(e, "MOBILE")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Has Children:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.HAS_TAMIRIKI || ''} onChange={(e) => handleChange(e, "HAS_TAMIRIKI")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b># of Children:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.NUMBER_OF_TAMIRIKI || ''} onChange={(e) => handleChange(e, "NUMBER_OF_TAMIRIKI")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Has Siblings:</b></label>
+            <input style={{ width: '75%' }} type="text" value={editedUser.HAS_SIBLINGS || ''} onChange={(e) => handleChange(e, "HAS_SIBLINGS")} />
+          </div>
+          {NUMBER_OF_SIBLINGS &&
+            <div>
+              <label style={{ marginRight: '5px' }}><b># of Siblings:</b></label>
+              <input style={{ width: '75%' }} type="text" value={editedUser.NUMBER_OF_SIBLINGS || ''} onChange={(e) => handleChange(e, "NUMBER_OF_SIBLINGS")} />
+            </div>
+          }
           <p><b>Tupuna:</b> {TUPUNA.map((tupuna, index) => <li key={index}>{tupuna}</li>)}</p>
-          {TUPUNA_UNSURE_EXPLANATION && <p><b>Tupuna Free Text:</b> {TUPUNA_UNSURE_EXPLANATION}</p>}
-          <p><b>Is Whangai?:</b> {IS_WHANGAI}</p>
-          {MOTHER_NAME && <p><b>Mother's Name:</b> {MOTHER_NAME}</p>}
-          {MOTHER_WHAKAPAPA && <p><b>Mother's Tupuna:</b> {MOTHER_WHAKAPAPA}</p>}
-          {FATHER_NAME && <p><b>Father's Name:</b> {FATHER_NAME}</p>}
-          {FATHER_WHAKAPAPA && <p><b>Father's Tupuna:</b> {FATHER_WHAKAPAPA}</p>}
-          {MATERNAL_GRANDMOTHER_NAME && <p><b>Maternal Grandmother:</b> {MATERNAL_GRANDMOTHER_NAME}</p>}
-          {MATERNAL_GRANDFATHER_NAME && <p><b>Maternal Grandfather:</b> {MATERNAL_GRANDFATHER_NAME}</p>}
-          {PATERNAL_GRANDMOTHER_NAME && <p><b>Paternal Grandmother:</b> {PATERNAL_GRANDMOTHER_NAME}</p>}
-          {PATERNAL_GRANDFATHER_NAME && <p><b>Paternal Grandfather:</b> {PATERNAL_GRANDFATHER_NAME}</p>}
+          {TUPUNA_UNSURE_EXPLANATION && <p><b>Tupuna Free Text:</b> {TUPUNA_UNSURE_EXPLANATION || ''}</p>}
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Is Whangai?:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.IS_WHANGAI || ''} onChange={(e) => handleChange(e, "IS_WHANGAI")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Mother's Name:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.MOTHER_NAME || ''} onChange={(e) => handleChange(e, "MOTHER_NAME")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Mother's Tupuna:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.MOTHER_WHAKAPAPA || ''} onChange={(e) => handleChange(e, "MOTHER_WHAKAPAPA")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Father's Name:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.FATHER_NAME || ''} onChange={(e) => handleChange(e, "FATHER_NAME")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Father's Tupuna:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.FATHER_WHAKAPAPA || ''} onChange={(e) => handleChange(e, "FATHER_WHAKAPAPA")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Maternal Grandmother:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.MATERNAL_GRANDMOTHER_NAME || ''} onChange={(e) => handleChange(e, "MATERNAL_GRANDMOTHER_NAME")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Maternal Grandfather:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.MATERNAL_GRANDFATHER_NAME || ''} onChange={(e) => handleChange(e, "MATERNAL_GRANDFATHER_NAME")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Paternal Grandmother:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.PATERNAL_GRANDMOTHER_NAME || ''} onChange={(e) => handleChange(e, "PATERNAL_GRANDMOTHER_NAME")} />
+          </div>
+          <div>
+            <label style={{ marginRight: '5px' }}><b>Paternal Grandfather:</b></label>
+            <input style={{ width: '60%' }} type="text" value={editedUser.PATERNAL_GRANDFATHER_NAME || ''} onChange={(e) => handleChange(e, "PATERNAL_GRANDFATHER_NAME")} />
+          </div>
         </Modal.Body>
         <Modal.Footer>
           {submitting &&

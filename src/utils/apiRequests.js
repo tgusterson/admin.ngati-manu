@@ -11,6 +11,9 @@ export const getUsersByIndex = async (query) => {
         key: process.env.FAUNA_SERVER_SECRET
       }
     })
+    setTimeout(() => {
+      console.log("Waiting...")
+    }, 500)
     return data.data
   } catch (e) {
     return e
