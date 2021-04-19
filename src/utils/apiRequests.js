@@ -73,7 +73,7 @@ export const deleteUser = async (id) => {
 export const sendMail = async ({ to, subject, html, text }) => {
   try {
     const data = await axios({
-      method: 'post',
+      method: 'POST',
       url: '/api/sendEmail',
       data: {
         to,
